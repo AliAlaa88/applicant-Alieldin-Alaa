@@ -1,0 +1,23 @@
+{
+  "tasks": {
+    "test": "vitest",
+    "coverage": "vitest --coverage",
+    "benchmark:fingerTree": "deno bench ./src/fingerTree/FingerTree.bench.ts",
+    "benchmark:fingerPriorityQueue": "deno bench ./src/fingerPriorityQueue/FingerPriorityQueue.bench.ts"
+  },
+  "exports": "./src/index.ts",
+  "lint": { "rules": { "exclude": ["ban-ts-comment", "no-explicit-any"] } },
+  "imports": {
+    "@effect/typeclass": "npm:@effect/typeclass@^0.38.0",
+    "effect": "npm:effect@^3.19.13",
+    "vitest": "npm:vitest@^4.1.5",
+    "@vitest/coverage-v8": "npm:@vitest/coverage-v8@^4.1.5",
+    "@trampoline": "./src/utils/trampoline.ts",
+    "@monoids": "./src/utils/monoids.ts",
+    "@internal/": "./src/internal/"
+  },
+  "compilerOptions": {
+    "lib": ["esnext", "deno.ns"]
+  },
+  "nodeModulesDir": "auto"
+}
