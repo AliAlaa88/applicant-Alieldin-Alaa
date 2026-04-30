@@ -1,0 +1,11 @@
+inputs:
+  git-hooks:
+    url: github:cachix/git-hooks.nix
+    inputs:
+      nixpkgs:
+        follows: nixpkgs
+  nixpkgs-stable:
+    url: github:NixOS/nixpkgs/nixos-25.11
+imports:
+  - ./nix/devenv.nix
+  - ./nix/deno.nix
