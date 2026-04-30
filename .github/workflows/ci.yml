@@ -1,0 +1,57 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: lint · format · test · coverage · bench
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Deno
+        uses: denoland/setup-deno@v2
+        with:
+          deno-version: v2.x
+
+      - name: Cache Deno dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/deno
+            node_modules
+          key: deno-${{ runner.os }}-${{ hashFiles('deno.json', 'deno.lock') }}
+          restore-keys: deno-${{ runner.os }}-
+
+      - name: Resolve dependencies
+        run: deno install
+
+      - name: Format check
+        run: deno fmt --check
+
+      - name: Lint
+        run: deno lint
+
+      - name: Type-check public entrypoint
+        run: deno check src/index.ts
+
+      - name: Tests with coverage
+        run: deno task coverage
+
+      - name: Benchmark — FingerTree
+        run: deno task benchmark:fingerTree
+
+      - name: Benchmark — FingerPriorityQueue
+        run: deno task benchmark:fingerPriorityQueue
