@@ -31,7 +31,7 @@ export class FingerTreeIterator<V, A> implements IterableIterator<A> {
 
   next(): IteratorResult<A> {
     const h = head(this.current);
-    
+
     if (O.isNone(h)) {
       return { value: undefined, done: true };
     }

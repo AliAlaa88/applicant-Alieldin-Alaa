@@ -65,7 +65,7 @@ export type Split<V, A> = Sp<V, A>;
 
 /**
  * Creates an empty FingerTree.
- * 
+ *
  * @complexity O(1)
  * @cite Hinze-Paterson §3.1
  */
@@ -74,7 +74,7 @@ export const empty = <V, A>(_m: Measured<A, V>): FingerTree<V, A> =>
 
 /**
  * Creates a FingerTree with a single element.
- * 
+ *
  * @complexity O(1)
  * @cite Hinze-Paterson §3.1
  */
@@ -83,7 +83,7 @@ export const single = <V, A>(_m: Measured<A, V>, _value: A): FingerTree<V, A> =>
 
 /**
  * Creates a FingerTree from a ReadonlyArray.
- * 
+ *
  * @complexity O(n)
  * @cite Hinze-Paterson §3.2 (append)
  */
@@ -156,7 +156,7 @@ const prependCPS = <V, A>(
 
 /**
  * Adds an element to the left end of the tree.
- * 
+ *
  * @complexity O(1) amortized, O(log n) worst-case
  * @cite Hinze-Paterson §3.2
  */
@@ -226,7 +226,7 @@ const appendCPS = <V, A>(
 
 /**
  * Adds an element to the right end of the tree.
- * 
+ *
  * @complexity O(1) amortized, O(log n) worst-case
  * @cite Hinze-Paterson §3.2
  */
@@ -237,7 +237,7 @@ export const append = <V, A>(
 
 /**
  * Returns the first element of the tree if it exists.
- * 
+ *
  * @complexity O(1)
  * @cite Hinze-Paterson §3.2 (ViewL)
  */
@@ -249,7 +249,7 @@ export const head = <V, A>(_t: FingerTree<V, A>): O.Option<A> => {
 
 /**
  * Returns the last element of the tree if it exists.
- * 
+ *
  * @complexity O(1)
  * @cite Hinze-Paterson §3.2 (ViewR)
  */
@@ -342,7 +342,7 @@ const tailCPS = <V, A>(
 
 /**
  * Returns a tree containing all elements except the first.
- * 
+ *
  * @complexity O(1) amortized, O(log n) worst-case
  * @cite Hinze-Paterson §3.2 (via ViewL)
  */
@@ -433,7 +433,7 @@ const initCPS = <V, A>(
 
 /**
  * Returns a tree containing all elements except the last.
- * 
+ *
  * @complexity O(1) amortized, O(log n) worst-case
  * @cite Hinze-Paterson §3.2 (via ViewR)
  */
@@ -518,7 +518,7 @@ const app3CPS = <V, A>(
 
 /**
  * Concatenates two FingerTrees.
- * 
+ *
  * @complexity O(log(min(n1, n2)))
  * @cite Hinze-Paterson §3.3
  */
@@ -710,7 +710,7 @@ const splitTreeCPS = <V, A>(
 
 /**
  * Splits a tree based on a predicate on the monoidal annotation.
- * 
+ *
  * @complexity O(log(min(nl, nr)))
  * @cite Hinze-Paterson §4.4
  */
@@ -784,7 +784,7 @@ const mapCPS = <V, A, B>(
 
 /**
  * Maps a function over every element in the tree.
- * 
+ *
  * @complexity O(n)
  */
 export const map = <V, A, B>(
@@ -842,7 +842,7 @@ const foldlCPS = <V, A, B>(
 
 /**
  * Performs a left-associative fold over the tree.
- * 
+ *
  * @complexity O(n)
  * @cite Hinze-Paterson §2.2
  */
@@ -901,7 +901,7 @@ const foldrCPS = <V, A, B>(
 
 /**
  * Performs a right-associative fold over the tree.
- * 
+ *
  * @complexity O(n)
  * @cite Hinze-Paterson §2.2
  */
