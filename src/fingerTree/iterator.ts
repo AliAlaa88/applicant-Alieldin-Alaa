@@ -19,19 +19,29 @@
  *   - `[Symbol.iterator]()` — returns `this` (an iterator that is also
  *     `Iterable` is the convention for `IterableIterator`).
  */
-import type { FingerTree } from "./FingerTree.ts";
+import * as O from "effect/Option";
+import { type FingerTree, head, tail } from "./FingerTree.ts";
 
 export class FingerTreeIterator<V, A> implements IterableIterator<A> {
+  private current: FingerTree<V, A>;
+
   constructor(_tree: FingerTree<V, A>) {
-    throw new Error(
-      "FingerTreeIterator constructor is not implemented yet. See TASK.md §3.1.",
-    );
+    this.current = _tree;
   }
 
   next(): IteratorResult<A> {
-    throw new Error(
-      "FingerTreeIterator.next is not implemented yet. See TASK.md §3.1.",
-    );
+    const h = head(this.current);
+    
+    if (O.isNone(h)) {
+      return { value: undefined, done: true };
+    }
+
+    const t = tail(this.current);
+    if (O.isSome(t)) {
+      this.current = t.value;
+    }
+
+    return { value: h.value, done: false };
   }
 
   [Symbol.iterator](): IterableIterator<A> {
