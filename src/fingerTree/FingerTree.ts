@@ -723,6 +723,15 @@ export const split = <V, A>(
   return O.some(trampoline(splitTreeCPS)(_predicate, _start, _t));
 };
 
+export const take = <A>(
+  n: number,
+  t: FingerTree<number, A>,
+): FingerTree<number, A> =>
+  n <= 0
+    ? empty(t.m)
+    : n >= t.annotation
+    ? t
+    : O.getOrThrow(split((v) => v > n, 0, t)).left;
 // ---------------------------------------------------------------------------
 // Higher-order traversals
 // ---------------------------------------------------------------------------

@@ -14,6 +14,7 @@ import {
   single,
   split,
   tail,
+  take,
 } from "./FingerTree.ts";
 import type { Measured } from "@monoids";
 import { Option } from "effect";
@@ -310,5 +311,54 @@ describe("FingerTree", () => {
       }
       expect(isEmpty(t)).toBe(true);
     });
+  });
+});
+
+const sizeMeasured: Measured<number, number> = {
+  empty: 0,
+  combine: (a, b) => a + b,
+  measure: () => 1,
+  combineAll: () => {
+    throw new Error();
+  },
+  combineMany: () => {
+    throw new Error();
+  },
+};
+
+describe("take (E1)", () => {
+  it("return empty tree when n is zero", () => {
+    const tree = fromArray([1, 2, 3, 4, 5], sizeMeasured);
+    const result = take(0, tree);
+    expect(isEmpty(result)).toBe(true);
+    expect(result.annotation).toBe(0);
+  });
+
+  it("return empty tree when n is negative", () => {
+    const tree = fromArray([1, 2, 3], sizeMeasured);
+    const result = take(-1, tree);
+    expect(isEmpty(result)).toBe(true);
+    expect(result.annotation).toBe(0);
+  });
+
+  it("return first element when taking 1", () => {
+    const tree = fromArray([10, 20, 30], sizeMeasured);
+    const result = take(1, tree);
+    expect(result.toList()).toEqual([10]);
+    expect(result.annotation).toBe(1);
+  });
+
+  it("return the whole tree when n equals size", () => {
+    const tree = fromArray([1, 2, 3, 4], sizeMeasured);
+    const result = take(4, tree);
+    expect(result.toList()).toEqual([1, 2, 3, 4]);
+    expect(result.annotation).toBe(4);
+  });
+
+  it("return the whole tree when n is greater than size", () => {
+    const tree = fromArray([1, 2, 3], sizeMeasured);
+    const result = take(10, tree);
+    expect(result.toList()).toEqual([1, 2, 3]);
+    expect(result.annotation).toBe(3);
   });
 });
